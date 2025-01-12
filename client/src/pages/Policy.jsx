@@ -4,7 +4,7 @@ import policy from "../assets/policy.jpg";
 
 const Policy = () => {
   return (
-<Layout>
+<Layout title={"Privacy policy"}>
   <div className="row policy">
           <div className="col-md-6">
             <img
