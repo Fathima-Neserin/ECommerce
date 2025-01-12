@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+/* Header */
 .navbar {
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 17px;
@@ -18,4 +18,65 @@
 }
 .active {
   border-bottom: 1.3px solid black;
+}
+.navbar-brand {
+  font-weight: 700;
+  font-family: sans-serif;
+  letter-spacing: 3px;
+}
+/* Footer */
+.footer {
+  color: white;
+  padding: 25px;
+  background: linear-gradient(to bottom, #767676, #000000);
+}
+.footer a {
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+}
+.footer a:hover {
+  color: rgba(104, 104, 111, 0.616);
+  border-bottom: 1px solid white ;
+}
+/* Page Not Found */
+.pnf {
+  display: flex;
+  min-height: 65vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pnf-title {
+  font-size: 100px;
+  font-weight: 700;
+}
+.pnf-heading {
+  font-weight: normal;
+}
+.pnf-btn {
+  color: black;
+  border: 1px solid black;
+  padding: 10px;
+  margin-top: 10px;
+  text-decoration: none;
+  font-size: 20px;
+}
+/* Contact Us */
+.row.contactus {
+  margin: 45px;
+  font-weight: 700;
+  line-height: 35px;
+
+}
+.row.aboutus {
+  margin: 45px;
+  font-weight: 700;
+  line-height: 35px;
+}
+.row.policy{
+  margin: 75px;
+  font-weight: 700;
+  line-height: 25px;
 }
