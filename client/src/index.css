@@ -28,7 +28,7 @@
 .footer {
   color: white;
   padding: 25px;
-  background: linear-gradient(to bottom, #767676, #000000);
+  background: linear-gradient(to bottom, #000000, #767676);
 }
 .footer a {
   text-decoration: none;
@@ -64,19 +64,17 @@
   font-size: 20px;
 }
 /* Contact Us */
-.row.contactus {
+.row.footer-links {
   margin: 45px;
   font-weight: 700;
   line-height: 35px;
 
 }
-.row.aboutus {
-  margin: 45px;
-  font-weight: 700;
-  line-height: 35px;
-}
+
+/* Policy */
 .row.policy{
   margin: 75px;
   font-weight: 700;
   line-height: 25px;
 }
+

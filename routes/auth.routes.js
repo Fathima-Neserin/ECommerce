@@ -10,6 +10,6 @@ router.post("/register", registerController);
 
 router.post("/login", loginController);
 
-router.get("/test", authMiddleware, adminAuthMiddleware, testController)
+// router.get("/test", authMiddleware, adminAuthMiddleware, testController)
 
 module.exports = router;

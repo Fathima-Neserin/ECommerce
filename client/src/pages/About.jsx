@@ -5,7 +5,7 @@ import aboutUs from "../assets/aboutus.jpg";
 function About() {
   return (
     <Layout title={"About us"}>
-        <div className="row aboutus">
+        <div className="row footer-links">
           <div className="col-md-6">
             <img
             src={aboutUs}

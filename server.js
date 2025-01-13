@@ -1,6 +1,7 @@
 const express = require("express");
 const colors = require("colors");
 const morgan = require("morgan");
+const cors = require("cors");
 require("dotenv").config();
 
 const connectDB = require("./config/db.config");
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
     res.send("<h1>Welcome to ECommerce App, MERN Stack Project</h1>")
 })
 
+app.use(cors())
 app.use(morgan("dev"));
 app.use(express.json())
 

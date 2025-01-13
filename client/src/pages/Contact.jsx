@@ -8,7 +8,7 @@ import { BiSupport } from "react-icons/bi";
 const Contact = () => {
   return (
 <Layout title={"Contact us"}>
-<div className="row contactus">
+<div className="row footer-links">
   <div className="col-md-6">
     <img
     src={contactUs}

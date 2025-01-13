@@ -8,7 +8,7 @@ exports.registerController = async (req, res) => {
     const { name, email, password, phone, address } = req.body;
     // validation
     if (!name || !email || !password || !phone || !address) {
-      return res.send({ error: "All Fields are Required " });
+      return res.send({ message: "All Fields are Required " });
     }
     // user already exists
     const existingUser = await Users.findOne({ email });
@@ -96,10 +96,10 @@ exports.loginController = async (req, res) => {
   }
 };
 
-exports.testController = async(req, res) => {
-    try {
-        res.status(200).send({message:"Succesful Protected Route"})
-    } catch (error) {
+// exports.testController = async(req, res) => {
+//     try {
+//         res.status(200).send({message:"Succesful Protected Route"})
+//     } catch (error) {
         
-    }
-}
+//     }
+// }
