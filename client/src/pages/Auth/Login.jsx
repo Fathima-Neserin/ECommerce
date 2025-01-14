@@ -4,38 +4,46 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../../styles/auth.styles.css";
+import { useAuth } from "../../context/auth.context";
+
 const Login = () => {
-    
-      const navigate = useNavigate();
-    
-      const [email, setEmail] = useState("");
-      const [password, setPassword] = useState("");
-    
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-          const response = await axios.post(
-            `${process.env.REACT_APP_API}/api/v1/auth/login`,
-            { email, password })
-            if(response.data.success){
-              toast.success(response.data.message)
-              navigate("/")
-            }else{
-              toast.error(response.data.message)
-            }
-        } catch (error) {
-          console.log(error);
-          toast.error("Something went wrong, Try again later");
-        }
-      };
+  const navigate = useNavigate();
+  const [auth, setAuth] = useAuth();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API}/api/v1/auth/login`,
+        { email, password }
+      );
+      if (response.data.success) {
+        toast.success(response.data.message);
+        setAuth({
+          ...auth,
+          user: response.data.user,
+          token: response.data.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(response.data));
+        navigate("/");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong, Try again later");
+    }
+  };
   return (
-  <Layout title={"Login - Ecommerce App"}>
+    <Layout title={"Login - Ecommerce App"}>
       <div className="form-container">
-       
         <br />
         <br />
         <form onSubmit={handleSubmit}>
-        <h1 className="title">Please Login;</h1>
+          <h1 className="title">Please Login;</h1>
           <div className="mb-3">
             <input
               type="email"
@@ -63,8 +71,8 @@ const Login = () => {
           </button>
         </form>
       </div>
-    </Layout>  
-    )
-}
+    </Layout>
+  );
+};
 
-export default Login
+export default Login;
