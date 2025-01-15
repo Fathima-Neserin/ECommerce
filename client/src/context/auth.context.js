@@ -1,5 +1,6 @@
 import { token } from "morgan";
 import { useState, useContext, createContext, useEffect } from "react";
+import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -9,6 +10,8 @@ const AuthProvider = ({ children }) => {
     token: "",
   });
 
+  // default axios
+  axios.defaults.headers.common["Authorization"] = auth?.token
   useEffect(() => {
     const data = localStorage.getItem("auth");
     if (data) {

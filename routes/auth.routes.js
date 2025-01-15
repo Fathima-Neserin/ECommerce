@@ -10,6 +10,9 @@ router.post("/register", registerController);
 
 router.post("/login", loginController);
 
+router.get("/user-auth", authMiddleware, (req, res) => {
+    res.status(200).send({ ok: true });
+})
 // router.get("/test", authMiddleware, adminAuthMiddleware, testController)
 
 module.exports = router;

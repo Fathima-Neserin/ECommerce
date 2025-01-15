@@ -7,13 +7,19 @@ import PageNotFound from "./pages/PageNotFound";
 import Register from "./pages/Auth/Register";
 import { Toaster } from "react-hot-toast";
 import Login from "./pages/Auth/Login";
+import Dashboard from "./user/Dashboard";
+import PrivateRoutes from "./Routes/PrivateRoutes";
 
 function App() {
   return (
     <div>
      <Routes>
       <Route path="/" element={<Home/>}/>
+      <Route path="/dashboard" element={<PrivateRoutes/>}>
+      <Route path="" element={<Dashboard/>}/>
+      </Route>
       <Route path="/register" element={<Register/>}/>
+      
       <Route path="/login" element={<Login/>}/>
       <Route path="/about" element={<About/>}/>
       <Route path="/contact" element={<Contact/>}/>
