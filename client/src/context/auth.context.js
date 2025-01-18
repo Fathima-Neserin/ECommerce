@@ -10,8 +10,15 @@ const AuthProvider = ({ children }) => {
     token: "",
   });
 
-  // default axios
-  axios.defaults.headers.common["Authorization"] = auth?.token
+  // Set default authorization header when the auth state changes
+  useEffect(() => {
+    if (auth?.token) {
+      axios.defaults.headers.common["Authorization"] = auth.token;
+    } else {
+      delete axios.defaults.headers.common["Authorization"];
+    }
+  }, [auth?.token]);
+  
   useEffect(() => {
     const data = localStorage.getItem("auth");
     if (data) {
