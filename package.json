@@ -19,6 +19,7 @@
     "mongoose": "^8.9.4",
     "morgan": "^1.10.0",
     "react-icons": "^5.4.0",
-    "react-router-dom": "^7.1.1"
+    "react-router-dom": "^7.1.1",
+    "slugify": "^1.6.6"
   }
 }
