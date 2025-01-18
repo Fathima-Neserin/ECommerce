@@ -5,9 +5,9 @@ const jwt = require("jsonwebtoken");
 
 exports.registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, address } = req.body;
+    const { name, email, password, phone, address, answer } = req.body;
     // validation
-    if (!name || !email || !password || !phone || !address) {
+    if (!name || !email || !password || !phone || !address || !answer) {
       return res.send({ message: "All Fields are Required " });
     }
     // user already exists
@@ -29,6 +29,7 @@ exports.registerController = async (req, res) => {
       phone,
       address,
       password: hashedPassword,
+      answer
     });
     await newUser.save();
     res.status(201).send({
@@ -95,6 +96,34 @@ exports.loginController = async (req, res) => {
     });
   }
 };
+exports.forgotPasswordController = async(req, res) => {
+  try {
+    const {email, answer, newPassword} = req.body;
+    if(!email || !answer || !newPassword){
+      return res.status(400).send("All foelds are required");
+    }
+    const user = await Users.findOne({email, answer})
+    if(!user){
+      return res.status(404).send({
+        success: false,
+        message: "Wrong Email or Answer"
+      })
+    }
+    const hashed = await hashPassword(newPassword);
+    await Users.findByIdAndUpdate(user._id, {password:hashed})
+    res.status(200).send({
+      success:true,
+      message: "Password reset successfully",
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success:false,
+      message:"Something went wrong",
+      error
+    })
+  }
+}
 
 // exports.testController = async(req, res) => {
 //     try {

@@ -9,6 +9,7 @@ import { Toaster } from "react-hot-toast";
 import Login from "./pages/Auth/Login";
 import Dashboard from "./user/Dashboard";
 import PrivateRoutes from "./Routes/PrivateRoutes";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
       <Route path="" element={<Dashboard/>}/>
       </Route>
       <Route path="/register" element={<Register/>}/>
-      
+      <Route path="/forgot-password" element={<ForgotPassword/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/about" element={<About/>}/>
       <Route path="/contact" element={<Contact/>}/>
