@@ -47,7 +47,7 @@ exports.updateCategoryController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    req.status(500).send({
+    res.status(500).send({
       success: false,
       message: "Error while updating category",
       error,
