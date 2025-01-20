@@ -29,7 +29,7 @@ const CreateCategory = () => {
       }
     } catch (error) {
       console.log(error);
-      toString.error("Something went wrong in input form");
+      toast.error("Something went wrong in input form");
     }
   };
   const getAllCategories = async () => {
