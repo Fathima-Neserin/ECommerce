@@ -17,34 +17,38 @@ import CreateProduct from "./pages/admin/CreateProduct";
 import Users from "./pages/admin/Users";
 import MyOrders from "./user/MyOrders";
 import Profile from "./user/Profile";
+import Products from "./pages/admin/Products";
+import UpdateProduct from "./pages/admin/UpdateProduct";
 
 function App() {
   return (
     <div>
-     <Routes>
-      <Route path="/" element={<Home/>}/>
-      <Route path="/dashboard" element={<PrivateRoutes/>}>
-      <Route path="user" element={<Dashboard/>}/>
-      <Route path="user/orders" element={<MyOrders/>}/>
-      <Route path="user/profile" element={<Profile/>}/>
-      </Route>
-      <Route path="/dashboard" element={<AdminRoutes/>}>
-      <Route path="admin" element={<AdminDashboard/>}/>
-      <Route path="admin/create-category" element={<CreateCategory/>}/>
-      <Route path="admin/create-product" element={<CreateProduct/>}/>
-      <Route path="admin/users" element={<Users/>}/>
-      </Route>
-      <Route path="/register" element={<Register/>}/>
-      <Route path="/forgot-password" element={<ForgotPassword/>}/>
-      <Route path="/login" element={<Login/>}/>
-      <Route path="/about" element={<About/>}/>
-      <Route path="/contact" element={<Contact/>}/>
-      <Route path="/policy" element={<Policy/>}/>
-      <Route path="*" element={<PageNotFound/>}/>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<PrivateRoutes />}>
+          <Route path="user" element={<Dashboard />} />
+          <Route path="user/orders" element={<MyOrders />} />
+          <Route path="user/profile" element={<Profile />} />
+        </Route>
+        <Route path="/dashboard" element={<AdminRoutes />}>
+          <Route path="admin" element={<AdminDashboard />} />
+          <Route path="admin/create-category" element={<CreateCategory />} />
+          <Route path="admin/create-product" element={<CreateProduct />} />
+          <Route path="admin/product/:slug" element={<UpdateProduct />} />
+          <Route path="admin/products" element={<Products />} />
+          <Route path="admin/users" element={<Users />} />
+        </Route>
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/policy" element={<Policy />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
-      <Toaster/>
+      <Toaster />
     </div>
   );
 }
 
-export default App
+export default App;
