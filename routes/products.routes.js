@@ -11,6 +11,9 @@ const {
   productPhotoController,
   deleteProductController,
   updateProductController,
+  filterProductController,
+  countProductController,
+  listProductController,
 } = require("../controllers/products.controllers");
 
 const router = express.Router();
@@ -44,5 +47,10 @@ router.delete(
   adminAuthMiddleware,
   deleteProductController
 );
-
+// filter product
+router.post("/filter-products", filterProductController);
+// count product
+router.get("/count-product", countProductController);
+// list products per page
+router.get("/list-product/:page", listProductController);
 module.exports = router;

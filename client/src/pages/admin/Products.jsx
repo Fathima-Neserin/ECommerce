@@ -3,7 +3,7 @@ import AdminMenu from "../../components/Layout/AdminMenu";
 import Layout from "../../components/Layout/Layout";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -23,6 +23,7 @@ const Products = () => {
   useEffect(() => {
     getAllProducts();
   }, []);
+
   return (
     <Layout title={"Products List"}>
       <div className="row">
@@ -31,31 +32,38 @@ const Products = () => {
         </div>
         <div className="col-md-9">
           <h1 className="text-center">All Products List</h1>
-          <div className="d-flex">
+          <div className="row">
             {products?.map((product) => (
-              <Link
-                to={`/dashboard/admin/product/${product.slug}`}
+              <div
                 key={product._id}
-                className="product-link"
+                className="col-12 col-sm-6 col-md-4 col-lg-2 mb-4"
               >
-                <div className="card m-2" style={{ width: "18rem" }}>
-                  <img
-                    src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`}
-                    className="product-img"
-                    alt={product.name}
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">{product.name}</h5>
-                    <p className="card-text">{product.description}</p>
-                    <NavLink href="#" className="btn btn-primary">
-                      Add to Cart
-                    </NavLink>
-                    <NavLink href="#" className="btn btn-primary">
-                      Buy
-                    </NavLink>
+                <Link to={`/dashboard/admin/product/${product.slug}`} className="text-decoration-none">
+                  <div className="card h-100 w-360">
+                    <img
+                      src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`}
+                      className="card-img-top product-img"
+                      alt={product.name}
+                      style={{ objectFit: "cover", height: "200px" }}
+                    />
+                    <div className="card-body d-flex flex-column">
+                      <h5 className="card-title">{product.name}</h5>
+                      <p className="card-text" style={{ flex: "2 2 auto" }}>
+                        {product.description.substring(0, 29)}.....
+                      </p>
+                      <p className="card-text">$ {product.price}</p>
+                      <div className="d-flex">
+                        <button className="btn btn-primary btn-sm">
+                          More Details
+                        </button>
+                        <button className="btn btn-secondary btn-sm ms-2">
+                          Add To Cart
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             ))}
           </div>
         </div>

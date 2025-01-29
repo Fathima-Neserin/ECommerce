@@ -176,3 +176,62 @@ exports.updateProductController = async (req, res) => {
     });
   }
 };
+exports.filterProductController = async (req, res) => {
+  try {
+    const { checked, radio } = req.body;
+    let query = {};
+    if (checked.length > 0) query.category = checked;
+    if (radio.length) query.price = { $gte: radio[0], $lte: radio[1] };
+    const products = await Products.find(query);
+    res.status(200).send({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while filtering products",
+      error,
+    });
+  }
+};
+exports.countProductController = async (req, res) => {
+  try {
+    const totalProducts = await Products.find().estimatedDocumentCount();
+    res.status(200).send({
+      success: true,
+      totalProducts,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while counting products",
+      error,
+    });
+  }
+};
+// Product list based on page - Pagination
+exports.listProductController = async (req, res) => {
+  try {
+    const pages = 4;
+    const page = req.params.page ? req.params.page : 1;
+    const products = await Products.find()
+      .select("-photo")
+      .skip((page - 1) * pages)
+      .limit(pages)
+      .sort({ createdAt: -1 });
+      res.status(200).send({
+        success: true,
+        products
+      })
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while listing products per page",
+      error,
+    });
+  }
+};
