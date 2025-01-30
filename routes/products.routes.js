@@ -14,6 +14,8 @@ const {
   filterProductController,
   countProductController,
   listProductController,
+  searchProductController,
+  similarProductController,
 } = require("../controllers/products.controllers");
 
 const router = express.Router();
@@ -47,10 +49,20 @@ router.delete(
   adminAuthMiddleware,
   deleteProductController
 );
+
 // filter product
 router.post("/filter-products", filterProductController);
+
 // count product
 router.get("/count-product", countProductController);
+
 // list products per page
 router.get("/list-product/:page", listProductController);
+
+// search product
+router.get("/search/:keyword", searchProductController);
+
+// similar-products
+router.get("/related-product/:pdtId/:ctgId", similarProductController);
+
 module.exports = router;

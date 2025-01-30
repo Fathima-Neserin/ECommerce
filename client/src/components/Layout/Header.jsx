@@ -3,6 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import { FaShopify } from "react-icons/fa6";
 import { useAuth } from "../../context/auth.context";
 import { toast } from "react-hot-toast";
+import SearchInput from "../Form/SearchInput";
 
 function Header() {
   const [auth, setAuth] = useAuth();
@@ -39,6 +40,7 @@ function Header() {
                 Ecommerce App
               </Link>
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+              <SearchInput/>
                 <li className="nav-item">
                   <NavLink to={"/"} className="nav-link">
                     Home

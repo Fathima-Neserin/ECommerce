@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
       delete axios.defaults.headers.common["Authorization"];
     }
   }, [auth?.token]);
-  
+
   useEffect(() => {
     const data = localStorage.getItem("auth");
     if (data) {
@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
+// custom hok
 const useAuth = () => useContext(AuthContext);
 
 export { useAuth, AuthProvider };

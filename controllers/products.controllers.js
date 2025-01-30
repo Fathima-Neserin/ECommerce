@@ -222,15 +222,60 @@ exports.listProductController = async (req, res) => {
       .skip((page - 1) * pages)
       .limit(pages)
       .sort({ createdAt: -1 });
-      res.status(200).send({
-        success: true,
-        products
-      })
+    res.status(200).send({
+      success: true,
+      products,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
       message: "Error while listing products per page",
+      error,
+    });
+  }
+};
+exports.searchProductController = async (req, res) => {
+  try {
+    const { keyword } = req.params;
+    const results = await Products.find({
+      $or: [
+        { name: { $regex: keyword, $options: "i" } },
+        { description: { $regex: keyword, $options: "i" } },
+      ],
+    }).select("-photo");
+    res.status(200).send({
+      success: true,
+      results,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while searching products",
+      error,
+    });
+  }
+};
+exports.similarProductController = async (req, res) => {
+  try {
+    const { pdtId, ctgId } = req.params;
+    const products = await Products.find({
+      category: ctgId,
+      _id: { $ne: pdtId },
+    })
+      .select("-photo")
+      .limit(3)
+      .populate("category");
+    res.status(200).send({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while displaying similar products",
       error,
     });
   }
