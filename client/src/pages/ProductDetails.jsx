@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout/Layout";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 const ProductDetails = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState({});
   const [relatedProducts, setRelatedProducts] = useState([]);
 
@@ -34,7 +35,7 @@ const ProductDetails = () => {
     }
   }
   return (
-    <Layout>
+    <Layout title={"Product Details"}>
       <div className="row container mt-2">
         <div className="col-md-6">
           <img
@@ -55,7 +56,7 @@ const ProductDetails = () => {
       </div>
       <hr/>
       <div className="row">
-      <h1 className="text-center">Similar Products</h1>
+      <h3 className="ms-4">Similar Products</h3>
         {relatedProducts.length < 1 && <p className="text-center">No simlar products found</p>}
         <div className="row ms-2">
             {relatedProducts?.map((product) => (
@@ -77,7 +78,9 @@ const ProductDetails = () => {
                     </p>
                     <p className="card-text">$ {product.price}</p>
                     <div className="d-flex">
-                     
+                    <button className="btn btn-primary btn-sm" onClick={() => navigate(`/product/${product.slug}`)}>
+                        More Details
+                      </button>
                       <button className="btn btn-secondary btn-sm ms-2">
                         Add To Cart
                       </button>

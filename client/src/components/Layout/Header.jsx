@@ -4,10 +4,11 @@ import { FaShopify } from "react-icons/fa6";
 import { useAuth } from "../../context/auth.context";
 import { toast } from "react-hot-toast";
 import SearchInput from "../Form/SearchInput";
+import useCategory from "../../hooks/useCategory";
 
 function Header() {
   const [auth, setAuth] = useAuth();
-
+  const categories = useCategory();
   const handleLogout = () => {
     setAuth({
       ...auth,
@@ -40,17 +41,38 @@ function Header() {
                 Ecommerce App
               </Link>
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <SearchInput/>
+                <SearchInput />
                 <li className="nav-item">
                   <NavLink to={"/"} className="nav-link">
                     Home
                   </NavLink>
                 </li>
-                <li className="nav-item">
-                  <NavLink to={"/category"} className="nav-link">
-                    Category
-                  </NavLink>
+                <li className="nav-item dropdown">
+                  <Link
+                    className="nav-link dropdown-toggle"
+                    to={"/categories"}
+                    data-bs-toggle="dropdown"
+                  >
+                    Categories
+                  </Link>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link className="dropdown-item" to={"/categories"}>
+                        All Categories
+                      </Link>
+                    </li>
+                    {categories.map((category) => (
+                      <Link
+                        className="dropdown-item"
+                        key={category._id}
+                        to={`/categories/${category.slug}`}
+                      >
+                        {category.name}
+                      </Link>
+                    ))}
+                  </ul>
                 </li>
+
                 {!auth.user ? (
                   <>
                     <li className="nav-item">
@@ -78,7 +100,12 @@ function Header() {
                       </NavLink>
                       <ul className="dropdown-menu">
                         <li>
-                          <NavLink to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`} className="dropdown-item">
+                          <NavLink
+                            to={`/dashboard/${
+                              auth?.user?.role === 1 ? "admin" : "user"
+                            }`}
+                            className="dropdown-item"
+                          >
                             Dashboard
                           </NavLink>
                         </li>

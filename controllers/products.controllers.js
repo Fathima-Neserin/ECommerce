@@ -1,4 +1,5 @@
 const Products = require("../models/products.models");
+const Categories = require("../models/categories.models");
 const fs = require("fs");
 const slugify = require("slugify");
 
@@ -276,6 +277,24 @@ exports.similarProductController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error while displaying similar products",
+      error,
+    });
+  }
+};
+exports.categoryProductController = async (req, res) => {
+  try {
+    const category = await Categories.findOne({slug: req.params.slug});
+    const products = await Products.find({ category }).populate("category");
+    res.status(200).send({
+      success: true,
+      category,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while displaying category based products",
       error,
     });
   }

@@ -16,6 +16,7 @@ const {
   listProductController,
   searchProductController,
   similarProductController,
+  categoryProductController,
 } = require("../controllers/products.controllers");
 
 const router = express.Router();
@@ -64,5 +65,8 @@ router.get("/search/:keyword", searchProductController);
 
 // similar-products
 router.get("/related-product/:pdtId/:ctgId", similarProductController);
+
+// category wise products
+router.get("/category-product/:slug", categoryProductController)
 
 module.exports = router;
