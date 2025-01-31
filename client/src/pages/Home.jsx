@@ -4,9 +4,12 @@ import axios from "axios";
 import { Checkbox, Radio } from "antd";
 import { Prices } from "../components/Price";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/cart.context";
+import toast from "react-hot-toast";
 
 function Home() {
   const navigate = useNavigate();
+  const [cart, setCart] = useCart();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -160,10 +163,23 @@ function Home() {
                     </p>
                     <p className="card-text">$ {product.price}</p>
                     <div className="d-flex">
-                      <button className="btn btn-primary btn-sm" onClick={() => navigate(`/product/${product.slug}`)}>
+                      <button
+                        className="btn btn-primary btn-sm"
+                        onClick={() => navigate(`/product/${product.slug}`)}
+                      >
                         More Details
                       </button>
-                      <button className="btn btn-secondary btn-sm ms-2">
+                      <button
+                        className="btn btn-secondary btn-sm ms-2"
+                        onClick={() => {
+                          setCart([...cart, product]);
+                          localStorage.setItem(
+                            "cart",
+                            JSON.stringify([...cart, product])
+                          );
+                          toast.success("Item added to cart");
+                        }}
+                      >
                         Add To Cart
                       </button>
                     </div>
