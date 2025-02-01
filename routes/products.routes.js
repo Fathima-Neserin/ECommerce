@@ -17,6 +17,8 @@ const {
   searchProductController,
   similarProductController,
   categoryProductController,
+  braintreeTokenController,
+  braintreePaymentController,
 } = require("../controllers/products.controllers");
 
 const router = express.Router();
@@ -67,6 +69,13 @@ router.get("/search/:keyword", searchProductController);
 router.get("/related-product/:pdtId/:ctgId", similarProductController);
 
 // category wise products
-router.get("/category-product/:slug", categoryProductController)
+router.get("/category-product/:slug", categoryProductController);
+
+// payment routes
+// get token
+router.get("/braintree/token", braintreeTokenController);
+
+// payment process
+router.post("/braintree/payment", authMiddleware, braintreePaymentController);
 
 module.exports = router;

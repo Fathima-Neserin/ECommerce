@@ -1,17 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout/Layout";
 import { useCart } from "../context/cart.context";
 import { useAuth } from "../context/auth.context";
 import { useNavigate } from "react-router-dom";
+import DropIn from "braintree-web-drop-in-react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const [auth] = useAuth();
   const [cart, setCart] = useCart();
   const navigate = useNavigate();
+  const [clientToken, setClientToken] = useState("");
+  const [instance, setInstance] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let existingCartItem = localStorage.getItem("cart");
-    setCart(JSON.parse(existingCartItem));
+    setCart(existingCartItem ? JSON.parse(existingCartItem) : []);
   }, []);
 
   const totalPrice = () => {
@@ -37,6 +43,44 @@ const Cart = () => {
       localStorage.setItem("cart", JSON.stringify(myCart));
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  // get payment gateway token
+  const getPaymentToken = async () => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API}/api/v1/product/braintree/token`
+      );
+      setClientToken(data?.clientToken);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getPaymentToken();
+  }, [auth?.token]);
+
+  const handlePayment = async () => {
+    try {
+      setLoading(true);
+      const { nonce } = await instance.requestPaymentMethod();
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API}/api/v1/product/braintree/payment`,
+        {
+          nonce,
+          cart,
+        }
+      );
+      setLoading(false);
+      localStorage.removeItem("cart");
+      setCart([]);
+      navigate("/dashboard/user/orders");
+      toast.success("Payment completed and order placed successfully");
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
     }
   };
   return (
@@ -121,15 +165,42 @@ const Cart = () => {
                 ) : (
                   <button
                     className="btn btn-outline-warning"
-                    onClick={() => navigate("/login", {
-                      state: "/cart"
-                    })}
+                    onClick={() =>
+                      navigate("/login", {
+                        state: "/cart",
+                      })
+                    }
                   >
                     Please Login to checkout
                   </button>
                 )}
               </div>
             )}
+
+            <div className="mt-2">
+              {!clientToken || !cart?.length ? (
+                ""
+              ) : (
+                <>
+                  <DropIn
+                    options={{
+                      authorization: clientToken,
+                      // paypal: {
+                      //   flow: "vault",
+                      // },
+                    }}
+                    onInstance={(instance) => setInstance(instance)}
+                  />
+                  <div
+                    className="btn btn-primary"
+                    onClick={handlePayment}
+                    disabled={!loading || !instance || !auth?.user?.address}
+                  >
+                    {loading ? "Processing..." : "Make Payment"}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
