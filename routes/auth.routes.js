@@ -4,6 +4,7 @@ const {
   loginController,
   testController,
   forgotPasswordController,
+  updateProfileController,
 } = require("../controllers/auth.controllers");
 const {
   authMiddleware,
@@ -28,6 +29,8 @@ router.get("/user-auth", authMiddleware, (req, res) => {
 router.get("/admin-auth", authMiddleware, adminAuthMiddleware, (req, res) => {
   res.status(200).send({ ok: true });
 });
+
+router.put("/profile-update/", authMiddleware, updateProfileController);
 // router.get("/test", authMiddleware, adminAuthMiddleware, testController)
 
 module.exports = router;

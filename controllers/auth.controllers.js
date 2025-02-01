@@ -29,7 +29,7 @@ exports.registerController = async (req, res) => {
       phone,
       address,
       password: hashedPassword,
-      answer
+      answer,
     });
     await newUser.save();
     res.status(201).send({
@@ -84,7 +84,7 @@ exports.loginController = async (req, res) => {
         email: user.email,
         phone: user.phone,
         address: user.address,
-        role: user.role
+        role: user.role,
       },
       token,
     });
@@ -97,39 +97,75 @@ exports.loginController = async (req, res) => {
     });
   }
 };
-exports.forgotPasswordController = async(req, res) => {
+exports.forgotPasswordController = async (req, res) => {
   try {
-    const {email, answer, newPassword} = req.body;
-    if(!email || !answer || !newPassword){
+    const { email, answer, newPassword } = req.body;
+    if (!email || !answer || !newPassword) {
       return res.status(400).send("All foelds are required");
     }
-    const user = await Users.findOne({email, answer})
-    if(!user){
+    const user = await Users.findOne({ email, answer });
+    if (!user) {
       return res.status(404).send({
         success: false,
-        message: "Wrong Email or Answer"
-      })
+        message: "Wrong Email or Answer",
+      });
     }
     const hashed = await hashPassword(newPassword);
-    await Users.findByIdAndUpdate(user._id, {password:hashed})
+    await Users.findByIdAndUpdate(user._id, { password: hashed });
     res.status(200).send({
-      success:true,
+      success: true,
       message: "Password reset successfully",
-    })
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      success:false,
-      message:"Something went wrong",
-      error
-    })
+      success: false,
+      message: "Something went wrong",
+      error,
+    });
   }
-}
+};
+exports.updateProfileController = async (req, res) => {
+  try {
+    const { name, email, phone, password, address } = req.body;
+    const user = await Users.findById(req.user._id);
+    if (password && password.length < 6) {
+      return res.status(400).send({
+        success: false,
+        message: "Password is required and must have minimum 6 charecters long",
+      });
+    }
+    const hashedPassword = password ? await hashPassword(password) : undefined;
+    const updatedUser = await Users.findByIdAndUpdate(
+      req.user._id,
+      {
+        name: name || user?.name,
+        email: email || user?.email,
+        password: hashedPassword || user?.password,
+        phone: phone || user?.phone,
+        address: address || user?.address,
+      },
+      { new: true }
+    );
+    res.status(200).send({
+      success: true,
+      message: "Profile updated successfully",
+      updatedUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while updating profile",
+      error,
+    });
+  }
+};
 
 // exports.testController = async(req, res) => {
 //     try {
 //         res.status(200).send({message:"Succesful Protected Route"})
 //     } catch (error) {
-        
+
 //     }
 // }

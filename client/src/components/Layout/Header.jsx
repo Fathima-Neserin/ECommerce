@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { FaShopify } from "react-icons/fa6";
 import { useAuth } from "../../context/auth.context";
 import { toast } from "react-hot-toast";
@@ -12,15 +12,21 @@ function Header() {
   const [cart] = useCart();
   const [auth, setAuth] = useAuth();
   const categories = useCategory();
+  const navigate = useNavigate();
+  
   const handleLogout = () => {
     setAuth({
-      ...auth,
       user: null,
       token: "",
     });
     localStorage.removeItem("auth");
     toast.success("Logout success");
+  
+    setTimeout(() => {
+      navigate("/login");
+    }, 500);  // Allow some delay for state updates
   };
+  
 
   return (
     <>
@@ -99,7 +105,7 @@ function Header() {
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                       >
-                        {auth?.user?.name}
+                        {auth?.user?.name || "User"}
                       </NavLink>
                       <ul className="dropdown-menu">
                         <li>
