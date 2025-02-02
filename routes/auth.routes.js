@@ -6,6 +6,10 @@ const {
   forgotPasswordController,
   updateProfileController,
   fetchOrdersController,
+  fetchAllOrdersController,
+  orderStatusController,
+  fetchAllUsers,
+  deleteUsers,
 } = require("../controllers/auth.controllers");
 const {
   authMiddleware,
@@ -33,7 +37,18 @@ router.get("/admin-auth", authMiddleware, adminAuthMiddleware, (req, res) => {
 
 router.put("/profile-update/", authMiddleware, updateProfileController);
 
+// user orders
 router.get("/orders", authMiddleware, fetchOrdersController);
+
+// admin orders
+router.get("/all-orders", authMiddleware, adminAuthMiddleware, fetchAllOrdersController);
+
+// order status update
+router.put("/order-status/:orderId", authMiddleware, adminAuthMiddleware, orderStatusController);
+
+router.get("/users", authMiddleware, adminAuthMiddleware, fetchAllUsers);
+
+router.delete("/delete-user/:id", authMiddleware, adminAuthMiddleware, deleteUsers);
 
 // router.get("/test", authMiddleware, adminAuthMiddleware, testController)
 

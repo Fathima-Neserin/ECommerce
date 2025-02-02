@@ -192,7 +192,7 @@ const Cart = () => {
                     onInstance={(instance) => setInstance(instance)}
                   />
                   <div
-                    className="btn btn-primary"
+                    className="btn btn-primary m-2"
                     onClick={handlePayment}
                     disabled={!loading || !instance || !auth?.user?.address}
                   >

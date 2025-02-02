@@ -176,6 +176,69 @@ exports.fetchOrdersController = async (req, res) => {
     });
   }
 };
+exports.fetchAllOrdersController = async (req, res) => {
+  try {
+    const orders = await Orders.find()
+      .populate("products", "-photo")
+      .populate("buyer", "name")
+      .sort({ createdAt: 1 });
+    res.status(200).send(orders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while fetching all orders",
+      error,
+    });
+  }
+};
+exports.orderStatusController = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { status } = req.body;
+    const updatedOrder = await Orders.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true }
+    );
+    res.status(200).send(updatedOrder);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while updating order status",
+      error,
+    });
+  }
+};
+exports.fetchAllUsers = async (req, res) => {
+  try {
+    const adminId = req.user._id;
+    const filteredUsers = await Users.find({ _id: { $ne: adminId } }).select(
+      "-password"
+    );
+    res.status(200).json(filteredUsers);
+  } catch (error) {
+    console.error("Error in fetching all users", error.message);
+    res.status(500).send({ error: "Internal server error" });
+  }
+};
+exports.deleteUsers = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteUser = await Users.findByIdAndDelete(id);
+    res.status(200).send({
+      success: true,
+      message: "User deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Error while deleting user",
+      error,
+    });
+  }
+};
 // exports.testController = async(req, res) => {
 //     try {
 //         res.status(200).send({message:"Succesful Protected Route"})
