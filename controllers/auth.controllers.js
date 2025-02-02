@@ -1,6 +1,6 @@
-const { token } = require("morgan");
 const { hashPassword, comparePassword } = require("../helpers/auth.helpers");
 const Users = require("../models/users.models");
+const Orders = require("../models/orders.models");
 const jwt = require("jsonwebtoken");
 
 exports.registerController = async (req, res) => {
@@ -161,7 +161,21 @@ exports.updateProfileController = async (req, res) => {
     });
   }
 };
-
+exports.fetchOrdersController = async (req, res) => {
+  try {
+    const orders = await Orders.find({ buyer: req.user._id })
+      .populate("products", "-photo")
+      .populate("buyer", "name");
+    res.status(200).send(orders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while fetching your orders",
+      error,
+    });
+  }
+};
 // exports.testController = async(req, res) => {
 //     try {
 //         res.status(200).send({message:"Succesful Protected Route"})

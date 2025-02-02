@@ -5,6 +5,7 @@ const {
   testController,
   forgotPasswordController,
   updateProfileController,
+  fetchOrdersController,
 } = require("../controllers/auth.controllers");
 const {
   authMiddleware,
@@ -31,6 +32,9 @@ router.get("/admin-auth", authMiddleware, adminAuthMiddleware, (req, res) => {
 });
 
 router.put("/profile-update/", authMiddleware, updateProfileController);
+
+router.get("/orders", authMiddleware, fetchOrdersController);
+
 // router.get("/test", authMiddleware, adminAuthMiddleware, testController)
 
 module.exports = router;
