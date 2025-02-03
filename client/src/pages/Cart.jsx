@@ -121,7 +121,7 @@ const Cart = () => {
                   </div>
                   <div className="col-md-8">
                     <p>{product.name}</p>
-                    <p>{product.description.substring(0.3)}....</p>
+                    <p>{product.description ? product.description.substring(0, 30) + "..." : "No description available"}</p>
                     <p>Price : $ {product.price}</p>
                     <button
                       className="btn btn-danger"

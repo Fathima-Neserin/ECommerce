@@ -44,6 +44,7 @@ const Profile = () => {
       toast.error("Something went wrong, Try again later");
     }
   };
+
   return (
     <Layout title={"Your Profile"}>
       <div className="container-fluid m-3 p-3">
@@ -52,64 +53,60 @@ const Profile = () => {
             <UserMenu />
           </div>
           <div className="col-md-9">
-            <div className="form-container">
-              <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="form-control"
-                    id="exampleInputName"
-                    placeholder="Enter your Name"
-                  />
-                </div>
-                <div className="mb-3">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="form-control"
-                    id="exampleInputEmail"
-                    placeholder="Enter your Email"
-                    disabled
-                  />
-                </div>
-                <div className="mb-3">
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="form-control"
-                    id="exampleInputPassword"
-                    placeholder="Enter your Password"
-                  />
-                </div>
-                <div className="mb-3">
-                  <input
-                    type="text"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="form-control"
-                    id="exampleInputPhone"
-                    placeholder="Enter your Phone Number"
-                  />
-                </div>
-                <div className="mb-3">
-                  <input
-                    type="text"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    className="form-control"
-                    id="exampleInputAddress"
-                    placeholder="Enter your Address"
-                  />
-                </div>
-
-                <button type="submit" className="reg-btn">
-                  UPDATE
-                </button>
-              </form>
+            <div className="d-flex justify-content-center">
+              <div className="card p-4 shadow-lg w-75 mt-4">
+                <h3 className="text-center mb-4">Update Profile</h3>
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-3">
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="form-control"
+                      placeholder="Enter your Name"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <input
+                      type="email"
+                      value={email}
+                      className="form-control"
+                      placeholder="Enter your Email"
+                      disabled
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="form-control"
+                      placeholder="Enter your Password"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <input
+                      type="text"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="form-control"
+                      placeholder="Enter your Phone Number"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <input
+                      type="text"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      className="form-control"
+                      placeholder="Enter your Address"
+                    />
+                  </div>
+                  <button type="submit" className="btn btn-primary w-100">
+                    UPDATE
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>

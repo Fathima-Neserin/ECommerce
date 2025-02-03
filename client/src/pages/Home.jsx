@@ -106,6 +106,24 @@ function Home() {
   useEffect(() => {
     if (checked.length || radio.length) filterProducts();
   }, [checked, radio]);
+
+   // Add to Cart Function
+   const handleAddToCart = async (e, product) => {
+    e.preventDefault();
+    try {
+      const isProductInCart = await cart.some((item) => item._id === product._id);
+      if (!isProductInCart) {
+        const updatedCart = [...cart, product];
+        setCart(updatedCart);
+        await localStorage.setItem("cart", JSON.stringify(updatedCart));
+        toast.success("Item added to cart");
+      } else {
+        toast.error("Item already present in your cart");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Layout title={"All Products - Best offers"}>
       <div className="row mt-3">
@@ -171,14 +189,7 @@ function Home() {
                       </button>
                       <button
                         className="btn btn-secondary btn-sm ms-2"
-                        onClick={() => {
-                          setCart([...cart, product]);
-                          localStorage.setItem(
-                            "cart",
-                            JSON.stringify([...cart, product])
-                          );
-                          toast.success("Item added to cart");
-                        }}
+                        onClick={(e) => handleAddToCart(e, product)}
                       >
                         Add To Cart
                       </button>

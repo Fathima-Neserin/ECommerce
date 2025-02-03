@@ -115,11 +115,7 @@ const CreateCategory = () => {
                   style={{ width: "18rem" }}
                   key={category._id}
                 >
-                  <img
-                    src={category.image}
-                    className="card-img-top"
-                    alt={category.name}
-                  />
+                 
                   <div className="card-body w-75">
                     <h5 className="card-title">{category.name}</h5>
                     <p className="card-text">{category.description}</p>

@@ -4,10 +4,12 @@ import UserMenu from "../components/Layout/UserMenu";
 import axios from "axios";
 import { useAuth } from "../context/auth.context";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [auth, setAuth] = useAuth();
+  const navigate = useNavigate();
 
   const getOrders = async () => {
     try {
@@ -96,6 +98,12 @@ const MyOrders = () => {
                           <span className="fw-bold text-primary mt-auto">
                             ${product.price}
                           </span>
+                          <button
+                      className="btn btn-primary btn-sm"
+                      onClick={() => navigate(`/product/${product.slug}`)}
+                    >
+                      More Details
+                    </button>
                         </div>
                       </div>
                     </div>
