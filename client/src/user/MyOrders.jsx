@@ -36,15 +36,15 @@ const MyOrders = () => {
 
             <div className="container mt-4">
               <div className="table-responsive bg-white shadow-sm p-4 rounded">
-                <table className="table  text-center align-middle">
+                <table className="table text-center align-middle">
                   <thead className="table-light">
                     <tr>
-                      <th>#</th>
-                      <th>Status</th>
-                      <th>Buyer</th>
-                      <th>Date</th>
-                      <th>Payment</th>
-                      <th>Quantity</th>
+                      <th className="w-10">#</th>
+                      <th className="w-15">Status</th>
+                      <th className="w-20">Buyer</th>
+                      <th className="w-20">Date</th>
+                      <th className="w-15">Payment</th>
+                      <th className="w-10">Quantity</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -68,8 +68,10 @@ const MyOrders = () => {
                               : "Failed"}
                           </span>
                         </td>
-                        <td>{order?.buyer?.name}</td>
-                        <td>{moment(order?.createdAt).fromNow()}</td>
+                        <td className="text-truncate">{order?.buyer?.name}</td>
+                        <td className="text-truncate">
+                          {moment(order?.createdAt).fromNow()}
+                        </td>
                         <td>${order?.payment?.amount}</td>
                         <td>{order?.products?.length}</td>
                       </tr>
@@ -77,6 +79,7 @@ const MyOrders = () => {
                   </tbody>
                 </table>
               </div>
+
               <div className="row mt-4">
                 {orders?.map((order) =>
                   order.products?.map((product) => (
@@ -99,11 +102,11 @@ const MyOrders = () => {
                             ${product.price}
                           </span>
                           <button
-                      className="btn btn-primary btn-sm"
-                      onClick={() => navigate(`/product/${product.slug}`)}
-                    >
-                      More Details
-                    </button>
+                            className="btn btn-secondary btn-sm w-100"
+                            onClick={() => navigate(`/product/${product.slug}`)}
+                          >
+                            More Details
+                          </button>
                         </div>
                       </div>
                     </div>

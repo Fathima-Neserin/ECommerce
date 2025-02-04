@@ -9,7 +9,7 @@
 } */
 /* Header */
 .navbar {
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 17px;
   line-height: 26px;
   text-transform: uppercase;
@@ -32,16 +32,18 @@
 .footer {
   color: white;
   padding: 25px;
-  background: linear-gradient(to bottom, #000000, #767676);
+  background-color: black;
+  /* background: linear-gradient(to bottom, #000000, #767676); */
 }
 .footer a {
+  color: white;
   text-decoration: none;
   color: white;
   padding: 10px;
 }
 .footer a:hover {
   color: rgba(104, 104, 111, 0.616);
-  border-bottom: 1px solid white ;
+  border-bottom: 1px solid white;
 }
 /* Page Not Found */
 .pnf {
@@ -72,11 +74,10 @@
   margin: 45px;
   font-weight: 700;
   line-height: 35px;
-
 }
 
 /* Policy */
-.row.policy{
+.row.policy {
   margin: 75px;
   font-weight: 700;
   line-height: 25px;
@@ -96,4 +97,55 @@
 .cat-btn:hover {
   background-color: #434343;
   color: white;
+}
+/* Primary Button */
+.btn-primary {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 5px 7px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+}
+
+/* Secondary Button */
+.btn-secondary {
+  background-color: black;
+  color: white;
+  border: 1px solid grey;
+  border-radius: 3px;
+  padding: 5px 7px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: grey;
+  color: black;
+  border: 1px solid black;
+}
+
+/* Delete Button */
+.btn-delete {
+  background-color: rgb(218, 77, 77);
+  color: white;
+  font-size: 15px;
+  border: 1px solid grey;
+  border-radius: 3px;
+  padding: 5px 7px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: grey;
+  color: black;
+  border: 1px solid black;
 }

@@ -236,7 +236,7 @@ const UpdateProduct = () => {
                 </div>
                 <div className="mb-3">
                   <button
-                    className="btn btn-danger ms-3"
+                    className="btn btn-delete ms-3"
                     onClick={handleDelete}
                   >
                     DELETE PRODUCT

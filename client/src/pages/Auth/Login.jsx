@@ -6,9 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "../../styles/auth.styles.css";
 import { useAuth } from "../../context/auth.context";
 
-
 const Login = () => {
-
   const navigate = useNavigate();
   const [auth, setAuth] = useAuth();
   const location = useLocation();
@@ -69,11 +67,15 @@ const Login = () => {
               required
             />
           </div>
-         <div className="mb-3">
-         <button type="button" className="forpwd-btn" onClick={() => navigate("/forgot-password")}>
-            Forgot Password
-          </button>
-         </div>
+          <div className="mb-3">
+            <button
+              type="button"
+              className="forpwd-btn"
+              onClick={() => navigate("/forgot-password")}
+            >
+              Forgot Password
+            </button>
+          </div>
           <button type="submit" className="reg-btn">
             LOGIN
           </button>

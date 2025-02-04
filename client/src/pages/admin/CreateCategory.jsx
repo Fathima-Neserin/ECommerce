@@ -131,7 +131,7 @@ const CreateCategory = () => {
                       Edit
                     </button>
                     <button
-                      className="btn btn-danger"
+                      className="btn btn-delete btn-sm"
                       onClick={() => handleDelete(category._id)}
                     >
                       Delete
