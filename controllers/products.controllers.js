@@ -226,7 +226,7 @@ exports.countProductController = async (req, res) => {
 // Product list based on page - Pagination
 exports.listProductController = async (req, res) => {
   try {
-    const pages = 4;
+    const pages = 6;
     const page = req.params.page ? req.params.page : 1;
     const products = await Products.find()
       .select("-photo")
