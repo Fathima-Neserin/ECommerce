@@ -144,8 +144,8 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.btn-secondary:hover {
-  background-color: grey;
+.btn-delete:hover {
+  background-color: rgb(173, 19, 19);
   color: black;
   border: 1px solid black;
 }

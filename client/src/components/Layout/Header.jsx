@@ -7,13 +7,15 @@ import SearchInput from "../Form/SearchInput";
 import useCategory from "../../hooks/useCategory";
 import { useCart } from "../../context/cart.context";
 import { Badge } from "antd";
+import { IoMdHome } from "react-icons/io";
+import { IoLogOutSharp } from "react-icons/io5";
 
 function Header() {
   const [cart] = useCart();
   const [auth, setAuth] = useAuth();
   const categories = useCategory();
   const navigate = useNavigate();
-  
+
   const handleLogout = () => {
     setAuth({
       user: null,
@@ -21,12 +23,11 @@ function Header() {
     });
     localStorage.removeItem("auth");
     toast.success("Logout success");
-  
+
     setTimeout(() => {
       navigate("/login");
-    }, 500);  // Allow some delay for state updates
+    }, 500); // Allow some delay for state updates
   };
-  
 
   return (
     <>
@@ -115,6 +116,7 @@ function Header() {
                             }`}
                             className="dropdown-item"
                           >
+                            <IoMdHome className="me-3 fs-3" />
                             Dashboard
                           </NavLink>
                         </li>
@@ -124,6 +126,7 @@ function Header() {
                             to={"/login"}
                             className="dropdown-item"
                           >
+                            <IoLogOutSharp className="me-3 fs-3" />
                             Logout
                           </NavLink>
                         </li>
