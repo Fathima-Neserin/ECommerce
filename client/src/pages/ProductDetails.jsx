@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useCart } from "../context/cart.context";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 
 const ProductDetails = () => {
   const params = useParams();
@@ -59,27 +60,35 @@ const ProductDetails = () => {
   };
   return (
     <Layout title={"Product Details"}>
-      <div className="row container mt-2">
-        <div className="col-md-6">
+      <div className="row container mt-3">
+        <motion.div 
+          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: -100 }}
+          transition={{ duration: 0.5 }}
+        className="col-md-6">
           <img
             src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`}
             className="card-img-top product-img"
             alt={product.name}
             style={{ objectFit: "cover", height: 400, width: 400 }}
           />
-        </div>
-        <div className="col-md-6 ">
+        </motion.div>
+        <motion.div 
+          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: 100 }}
+          transition={{ duration: 0.5 }}
+        className="col-md-6 ">
           <h1 className="text-center">Product Details</h1>
           <h6>Name : {product.name}</h6>
           <h6>Description : {product.description}</h6>
           <h6>Price : $ {product.price}</h6>
           <h6>Category : {product.category?.name}</h6>
           <button
-            className="btn btn-secondary btn-sm ms-2"
+            className="btn btn-secondary btn-sm ms-2 m-2"
             onClick={(e) => handleAddToCart(e, product)}>
             Add To Cart
           </button>
-        </div>
+        </motion.div>
       </div>
       <hr />
       <div className="row">
@@ -106,6 +115,7 @@ const ProductDetails = () => {
                     {product.description.substring(0, 29)}.....
                   </p>
                   <p className="card-text">$ {product.price}</p>
+                  
                   <div className="d-flex">
                     <button
                       className="btn btn-primary btn-sm"

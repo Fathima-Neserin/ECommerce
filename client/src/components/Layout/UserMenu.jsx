@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { FaUser, FaShoppingBag } from "react-icons/fa";
 
 const UserMenu = () => {
+  useEffect(() => {
+    console.log("UserMenu mounted");
+    return () => console.log("UserMenu unmounted");
+  }, []);
+
   return (
     <div className="text-center">
       <h4 className="mb-3">Dashboard</h4>

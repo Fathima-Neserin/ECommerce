@@ -4,6 +4,7 @@ import Layout from "../../components/Layout/Layout";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -30,15 +31,23 @@ const Products = () => {
         <div className="col-md-3">
           <AdminMenu />
         </div>
-        <div className="col-md-9">
-          <h1 className="text-center">All Products List</h1>
+        <motion.div
+          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: 100 }}
+          transition={{ duration: 0.5 }}
+          className="col-md-9"
+        >
+          <h1 className="text-center mt-3">All Products List</h1>
           <div className="row">
             {products?.map((product) => (
               <div
                 key={product._id}
                 className="col-12 col-sm-6 col-md-4 col-lg-2 mb-4"
               >
-                <Link to={`/dashboard/admin/product/${product.slug}`} className="text-decoration-none">
+                <Link
+                  to={`/dashboard/admin/product/${product.slug}`}
+                  className="text-decoration-none"
+                >
                   <div className="card h-100 w-360">
                     <img
                       src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`}
@@ -66,7 +75,7 @@ const Products = () => {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </Layout>
   );

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import AdminMenu from "../../components/Layout/AdminMenu";
 import Layout from "../../components/Layout/Layout";
 import { useAuth } from "../../context/auth.context";
+import { motion } from "framer-motion";
 import { Select } from "antd";
 import axios from "axios";
 import moment from "moment";
@@ -110,11 +111,16 @@ const AdminOrders = () => {
                 </table>
               </div>
 
-              <div className="row mt-4">
+              <div
+                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, x: 100 }}
+                transition={{ duration: 0.5 }}
+                className="row mt-4"
+              >
                 {orders?.map((order) =>
                   order.products?.map((product) => (
                     <div className="col-md-4 mb-3" key={product._id}>
-                      <div className="card h-100 shadow border border-secondary">
+                      <motion.div className="card h-20 shadow border border-secondary">
                         <img
                           src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`}
                           className="card-img-top border-bottom border-secondary"
@@ -132,7 +138,7 @@ const AdminOrders = () => {
                             ${product.price}
                           </span>
                         </div>
-                      </div>
+                      </motion.div>
                     </div>
                   ))
                 )}

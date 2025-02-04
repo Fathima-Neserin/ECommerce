@@ -5,9 +5,10 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { Modal } from "antd";
 import CategoryForm from "../../components/Form/CategoryForm";
+import { motion } from "framer-motion";
 
 const CreateCategory = () => {
-  const [categories, setCategories] = useState([]); // Initialize as an array
+  const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -108,14 +109,18 @@ const CreateCategory = () => {
                 setValue={setName}
               />
             </div>
-            <div className="d-flex flex-wrap gap-3">
+            <motion.div
+              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: 100 }}
+              transition={{ duration: 0.5 }}
+              className="d-flex flex-wrap gap-3"
+            >
               {categories.map((category) => (
                 <div
                   className="card"
                   style={{ width: "18rem" }}
                   key={category._id}
                 >
-                 
                   <div className="card-body w-75">
                     <h5 className="card-title">{category.name}</h5>
                     <p className="card-text">{category.description}</p>
@@ -139,7 +144,7 @@ const CreateCategory = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </motion.div>
             <Modal
               onCancel={() => setVisible(false)}
               footer={null}

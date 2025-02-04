@@ -11,7 +11,7 @@ import {
 const AdminMenu = () => {
   return (
     <div className="text-center">
-      <h4 className="mb-3">Admin Panel</h4>
+      <h4 className="mb-3 ">Admin Panel</h4>
       <div className="list-group">
         <NavLink
           to="/dashboard/admin/create-category"

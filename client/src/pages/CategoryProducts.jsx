@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCart } from "../context/cart.context";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 
 const CategoryProducts = () => {
   const [products, setProducts] = useState([]);
@@ -48,10 +49,22 @@ const CategoryProducts = () => {
   };
   return (
     <Layout title={"Category based products"}>
-      <div className="container mt-3">
-        <h2 className="text-center">Category - {category.name}</h2>
+      <div
+        whileInView={{ opacity: 1, x: 0 }}
+        initial={{ opacity: 0, x: -100 }}
+        transition={{ duration: 0.5 }}
+        className="container mt-3"
+      >
+        <motion.h2 className="text-center">
+          Category - {category.name}
+        </motion.h2>
         <h6 className="text-center">{products.length} items found</h6>
-        <div className="row">
+        <motion.div
+          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: 100 }}
+          transition={{ duration: 0.5 }}
+          className="row"
+        >
           {products?.map((product) => (
             <div
               key={product._id}
@@ -88,7 +101,7 @@ const CategoryProducts = () => {
               </div>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </Layout>
   );

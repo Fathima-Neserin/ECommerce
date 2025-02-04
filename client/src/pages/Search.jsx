@@ -1,14 +1,45 @@
 import React from "react";
 import Layout from "../components/Layout/Layout";
 import { useSearch } from "../context/search.context";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/cart.context";
+import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 
 const Search = () => {
   const [search, setSearch] = useSearch();
+  const [cart, setCart] = useCart();
+  const navigate = useNavigate();
+
+  const handleAddToCart = async (e, product) => {
+    e.preventDefault();
+    try {
+      const isProductInCart = await cart.some(
+        (item) => item._id === product._id
+      );
+      if (!isProductInCart) {
+        const updatedCart = [...cart, product];
+        setCart(updatedCart);
+        await localStorage.setItem("cart", JSON.stringify(updatedCart));
+        toast.success("Item added to cart");
+      } else {
+        toast.error("Item already present in your cart");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Layout title={"Search Results"}>
       <div className="container">
         <div className="text-center mt-3">
-          <h1>Search Results</h1>
+          <motion.h1
+            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: -100 }}
+            transition={{ duration: 0.5 }}
+          >
+            Search Results
+          </motion.h1>
           <h6>
             {search?.results.length < 1
               ? "No Products Found"
@@ -16,7 +47,10 @@ const Search = () => {
           </h6>
           <div className="row">
             {search?.results.map((product) => (
-              <div
+              <motion.div
+                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, x: 100 }}
+                transition={{ duration: 0.5 }}
                 key={product._id}
                 className="col-12 col-sm-6 col-md-4 col-lg-2 mb-4"
               >
@@ -34,16 +68,22 @@ const Search = () => {
                     </p>
                     <p className="card-text">$ {product.price}</p>
                     <div className="d-flex">
-                      <button className="btn btn-primary btn-sm">
+                      <button
+                        className="btn btn-primary btn-sm"
+                        onClick={() => navigate(`/product/${product.slug}`)}
+                      >
                         More Details
                       </button>
-                      <button className="btn btn-secondary btn-sm ms-2">
+                      <button
+                        className="btn btn-secondary btn-sm ms-2"
+                        onClick={(e) => handleAddToCart(e, product)}
+                      >
                         Add To Cart
                       </button>
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

@@ -6,6 +6,8 @@ import { Prices } from "../components/Price";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/cart.context";
 import toast from "react-hot-toast";
+import "../styles/card.styles.css";
+import { motion } from "framer-motion";
 
 function Home() {
   const navigate = useNavigate();
@@ -107,11 +109,13 @@ function Home() {
     if (checked.length || radio.length) filterProducts();
   }, [checked, radio]);
 
-   // Add to Cart Function
-   const handleAddToCart = async (e, product) => {
+  // Add to Cart Function
+  const handleAddToCart = async (e, product) => {
     e.preventDefault();
     try {
-      const isProductInCart = await cart.some((item) => item._id === product._id);
+      const isProductInCart = await cart.some(
+        (item) => item._id === product._id
+      );
       if (!isProductInCart) {
         const updatedCart = [...cart, product];
         setCart(updatedCart);
@@ -160,10 +164,20 @@ function Home() {
           </div>
         </div>
         <div className="col-md-9">
-          <h1 className="text-center">All Products</h1>
+          <motion.h1
+            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: -100 }}
+            transition={{ duration: 0.5 }}
+            className="text-center"
+          >
+            All Products
+          </motion.h1>
           <div className="row">
             {products?.map((product) => (
-              <div
+              <motion.div
+                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, x: 100 }}
+                transition={{ duration: 0.5 }}
                 key={product._id}
                 className="col-12 col-sm-6 col-md-4 col-lg-2 mb-4"
               >
@@ -196,7 +210,7 @@ function Home() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
           <div className="m-3 p-2">
