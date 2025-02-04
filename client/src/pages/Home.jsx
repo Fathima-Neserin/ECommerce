@@ -48,10 +48,7 @@ function Home() {
     totalCount();
   }, []);
 
-  useEffect(() => {
-    if (page === 1) return;
-    loadMore();
-  }, [page]);
+
   const loadMore = async () => {
     try {
       setLoading(true);
@@ -65,6 +62,11 @@ function Home() {
       console.log(error);
     }
   };
+  
+  useEffect(() => {
+    if (page === 1) return;
+    loadMore();
+  }, [page]);
   const handleFilter = (value, id) => {
     let all = [...checked];
     if (value) {
@@ -213,7 +215,7 @@ function Home() {
               </motion.div>
             ))}
           </div>
-          <div className="m-3 p-2">
+          <div className="m-3 p-2 text-center">
             {products && products.length < count && (
               <button
                 className="btn btn-warning"

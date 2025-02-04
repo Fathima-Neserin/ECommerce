@@ -8,22 +8,57 @@ import { motion } from "framer-motion";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const [count, setCount] = useState(0);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const totalCount = async () => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API}/api/v1/product/count-product`
+      );
+      setCount(data?.totalProducts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (page === 1) return;
+    loadMore();
+  }, [page]);
+  const loadMore = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API}/api/v1/product/list-product/${page}`
+      );
+      setLoading(false);
+      setProducts([...products, ...data?.products]);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
 
   const getAllProducts = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API}/api/v1/product/fetch-products`
+        `${process.env.REACT_APP_API}/api/v1/product/fetch-products?page=${page}`
       );
-      setProducts(data.products);
+      setProducts(data?.products);
+      setLoading(false);
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     getAllProducts();
-  }, []);
+    totalCount();
+  }, [page]);
 
   return (
     <Layout title={"Products List"}>
@@ -75,6 +110,17 @@ const Products = () => {
               </div>
             ))}
           </div>
+          {products?.length < count && (
+            <div className="m-3 p-2 text-center">
+              <button
+                className="btn btn-warning"
+                onClick={() => setPage(page + 1)}
+              
+              >
+                {loading ? "Loading..." : "Load More"}
+              </button>
+            </div>
+          )}
         </motion.div>
       </div>
     </Layout>
